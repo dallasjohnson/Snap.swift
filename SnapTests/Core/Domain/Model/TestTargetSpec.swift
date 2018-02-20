@@ -133,13 +133,15 @@ extension TestTargetSpec {
   }
   
   private func givenTestTarget(with function: String = "function",
-                               file: String = "file",
+                               file: StaticString = "file",
+                               line: UInt = 15,
                                named: String? = nil,
                                device: Device? = nil) -> TestTarget
   {
     return TestTarget(
       function: function,
       file: file,
+      line: line,
       named: named,
       device: device,
       fileManager: .default,

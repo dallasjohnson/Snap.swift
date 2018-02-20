@@ -5,7 +5,7 @@ protocol SnapshotLayerMatcherProvider {
 }
 
 struct SnapshotLayerMatcher: LayerMatcher {
-  
+
   private let layer: CALayer
   private let isRecording: Bool
   private let testTarget: TestTarget

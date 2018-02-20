@@ -28,7 +28,7 @@ struct SnapshotViewMatcher: ViewMatcher {
   func toMatchSnapshot() {
     toMatchSnapshot(named: nil)
   }
-  
+
   func toMatchSnapshot(for devices: [Device]) {
     devices.forEach { device in
       self.toMatchSnapshot(named: nil, with: device)

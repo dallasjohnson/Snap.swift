@@ -4,10 +4,11 @@ import XCTest
 // MARK: - XCTestCase + CALayer Expectation
 
 extension XCTestCase {
-  public func expect(_ layer: CALayer, function: String = #function, file: String = #file ) -> LayerMatcher {
+    public func expect(_ layer: CALayer, function: String = #function, file: StaticString = #file, line: UInt = #line) -> LayerMatcher {
     let testTarget = TestTarget(
       function: function,
-      file: file
+      file: file,
+      line: line
     )
     layer.layoutIfNeeded()
     

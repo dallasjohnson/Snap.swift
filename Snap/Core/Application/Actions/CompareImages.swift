@@ -26,17 +26,17 @@ struct CompareImages {
     
     let reference = testTarget.reference(for: .reference).path
     guard fileManager.fileExists(atPath: reference.path) else {
-      XCTFail("🚫 Reference image not found [`\(reference.path)`]")
+        XCTFail("🚫 Reference image not found [`\(reference.path)`]", file: testTarget.file, line: testTarget.line)
       return
     }
     
     guard let referenceImage = UIImage(contentsOfFile: reference.path) else {
-      XCTFail("🚫 Error loading reference image [`\(reference.path)`]")
+      XCTFail("🚫 Error loading reference image [`\(reference.path)`]", file: testTarget.file, line: testTarget.line)
       return
     }
     
     guard let pngImage = UIImagePNGRepresentation(image), let processedImage = UIImage(data: pngImage) else {
-      XCTFail("🚫 Cannot process view image")
+      XCTFail("🚫 Cannot process view image", file: testTarget.file, line: testTarget.line)
       return
     }
     
@@ -46,22 +46,22 @@ struct CompareImages {
       try referenceImage.compare(with: processedImage)
     } catch CompareError.notEqualSize(let referenceSize, let comparedSize) {
       self.process(failedImage: processedImage, reference: referenceImage, testTarget: testTarget)
-      XCTFail("📏 Image sizes should be equals, reference image size: \(referenceSize), compared image size: \(comparedSize)")
+      XCTFail("📏 Image sizes should be equals, reference image size: \(referenceSize), compared image size: \(comparedSize)", file: testTarget.file, line: testTarget.line)
     } catch CompareError.invalidImageSize {
       self.process(failedImage: processedImage, reference: referenceImage, testTarget: testTarget)
-      XCTFail("📏 One of the images has 0 size")
+      XCTFail("📏 One of the images has 0 size", file: testTarget.file, line: testTarget.line)
     } catch CompareError.notEquals {
       self.process(failedImage: processedImage, reference: referenceImage, testTarget: testTarget)
-      XCTFail("≠ Images are not equal")
-    } catch CompareError.notEqualMetadata {
+      XCTFail("≠ Images are not equal", file: testTarget.file, line: testTarget.line)
+    } catch CompareError.notEqualMetadata(let metaData) {
       self.process(failedImage: processedImage, reference: referenceImage, testTarget: testTarget)
-      XCTFail("👾 Images have different metadata information")
+        XCTFail("👾 Images have different metadata information: \(metaData)", file: testTarget.file, line: testTarget.line)
     } catch CompareError.invalidReferenceImage {
       self.process(failedImage: processedImage, reference: referenceImage, testTarget: testTarget)
-      XCTFail("👾 Invalid reference image")
+      XCTFail("👾 Invalid reference image", file: testTarget.file, line: testTarget.line)
     } catch {
       self.process(failedImage: processedImage, reference: referenceImage, testTarget: testTarget)
-      XCTFail("🚫 Unknown error")
+      XCTFail("🚫 Unknown error", file: testTarget.file, line: testTarget.line)
     }
   }
   

@@ -9,11 +9,11 @@ enum Type: String {
 extension TestTarget {
   func reference(for type: Type) -> Reference {
     // There should be a better way to handle with this ⚠️
-    let classFile = file.components(separatedBy: "/").last?.components(separatedBy: ".").first ?? ""
+    let classFile = String(describing: file).components(separatedBy: "/").last?.components(separatedBy: ".").first ?? ""
     let functionName = function.replacingOccurrences(of: "()", with: "").lowercased()
     let path = "\(self.path(for: type))\(classFile)/"
     let directory = url.appendingPathComponent(path)
-    let name = (named ?? functionName).replacingOccurrences(of: " ", with: "_")
+    let name = (nameded ?? functionName).replacingOccurrences(of: " ", with: "_")
 
     var partialPath = "\(type.rawValue)_"
     if let deviceName = device?.rawValue {

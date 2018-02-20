@@ -1,7 +1,8 @@
 // MARK: - Matcher
 
 public protocol Matcher: Nameable {
-  func toMatchSnapshot()
+    func toMatchSnapshot()
+    func toMatchSnapshot(named: String?)
 }
 
 public protocol ViewMatcher: Matcher, DeviceMatcher {}
